@@ -5,8 +5,9 @@ class nQueen:
 
     def setQueens(self, qAmt):
         self.qAmount = qAmt
-
-
+    
+    def getQueens(self):
+        return self.qAmount
 
 
 if __name__ == "__main__":
