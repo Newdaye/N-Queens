@@ -4,6 +4,9 @@ class nQueen:
         self.qAmount = qAmt
         self.rows, self.cols = (qAmt, qAmt)
         self.board = [["-"*self.cols]]*self.rows
+        
+        #here is here we save the current queen locations
+        self.locations = []
 
     def setQueens(self, qAmt):
         self.qAmount = qAmt
@@ -17,10 +20,19 @@ class nQueen:
                 print(j, end = " ")
             print()
     
+    def insertValidLocation(self, loc):
+        self.locations.append(loc)
+    def printValidLocations(self):
+        for i in self.locations:
+            print(i, end = " ")
+        print()
     #Checks: Row, Col, Diagonals. Returns True if move can be made, else returns false if queen is atacking
     def validMove(self):
         pass
-    
+
+    #problem is solved here
+    def solve(self):
+        pass
 
 if __name__ == "__main__":
     while True:
