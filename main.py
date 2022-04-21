@@ -1,7 +1,4 @@
 
-from logging.config import valid_ident
-
-
 class nQueen:
     def __init__(self, qAmt):
         self.qAmount = qAmt
@@ -9,6 +6,7 @@ class nQueen:
         #self.board = [["-"*self.cols]]*self.rows
         self.board = [["-" for x in range(self.cols)] for y in range(self.rows)]
         self.printFirstSolution = True
+        self.displayAll = False
         self.solutions = 0
 
     def setQueens(self, qAmt):
@@ -16,39 +14,55 @@ class nQueen:
 
     def getQueens(self):
         return self.qAmount
+    def setDisplayAllSolutions(self):
+        self.printFirstSolution = False
+        self.displayAll = True
 
     def printArray(self):
+        print("===")
         for i in self.board:
-            print(i)
+            for j in i:
+                print(j, end=" ")
             print()
-    
+        print("===")
+
     #Checks: Row, Col, Diagonals. Returns True if move can be made, else returns false if queen is atacking
     def validMove(self, row, col):
         for i in range(row):
             if self.board[i][col] == "Q":
                 return False
-
-        #for i in range(len(self.board)):
-        #    if self.board[i][i] == "Q": ## didn't account for diags
-        #        return False
-        # Check upper diagonal on right side
-        for i, j in zip(range(row, -1, -1),range(col, self.qAmount, 1)):
-            if self.board[i][j]=="Q":
+        ## TODO Fix this god awful mess if I have time, does the jobs though... zip function maybe? 
+        i = row - 1
+        j = col - 1
+        while i >= 0 and j >= 0:
+            if self.board[i][j] == "Q":
                 return False
-
-	    # Check upper diagonal on left side 
-        for i, j in zip(range(row, -1, -1),range(col, -1, -1)):
-            if self.board[i][j]=="Q":
+            i -= 1
+            j -= 1
+        i = row + 1
+        j = col + 1
+        while i < len(self.board) and j < len(self.board):
+            if self.board[i][j] == "Q":
                 return False
+            i += 1
+            j += 1
         
-        #k = len(self.board) - 1
-        #for i in range(len(self.board)):
-         #   if self.board[i][k] == "Q": ## didn't account for diags
-         #       return False
-        #    k = k - 1
+        i = row + 1
+        j = col - 1
+        while i < len(self.board) and j >= len(self.board):
+            if self.board[i][j] == "Q":
+                return False
+            i += 1
+            j -= 1
+        i = row - 1
+        j = col + 1
+        while i>=0 and j < len(self.board):
+            if self.board[i][j] == "Q":
+                return False
+            i -= 1
+            j += 1
         return True
-
-
+    
     def printSolutions(self):
         print(self.solutions)
         
@@ -57,6 +71,12 @@ class nQueen:
     def solve(self, row):
         if row == len(self.board):
             self.solutions += 1
+            if self.printFirstSolution == True:
+                self.printArray()
+                self.printFirstSolution = False
+            if self.displayAll == True:
+                self.printArray()
+
             return
         for i in range(len(self.board)):
             if self.validMove(row, i):
@@ -71,12 +91,23 @@ class nQueen:
 if __name__ == "__main__":
     while True:
         try:
+            print("Enter 0 for queens to exit!")
             userInput = int(input("How many queens?: "))
             #print(userInput)
             if userInput == 0:
                 break
         except:
             print("Enter an integer!")
+
+        uInput = input("Display all solutions(y/n)? ")
+
+            
+
         nq = nQueen(userInput)
+        if uInput == "y":
+            nq.setDisplayAllSolutions()
+        else:
+            print("Displaying only first result.")
+
         nq.solve(0)
         nq.printSolutions()
