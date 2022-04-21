@@ -27,8 +27,9 @@ class nQueen:
         for i in range(row):
             if self.board[i][col] == "Q":
                 return False
+
         #for i in range(len(self.board)):
-        #    if self.board[i][i] == "Q":
+        #    if self.board[i][i] == "Q": ## didn't account for diags
         #        return False
         # Check upper diagonal on right side
         for i, j in zip(range(row, -1, -1),range(col, self.qAmount, 1)):
@@ -39,9 +40,10 @@ class nQueen:
         for i, j in zip(range(row, -1, -1),range(col, -1, -1)):
             if self.board[i][j]=="Q":
                 return False
+        
         #k = len(self.board) - 1
         #for i in range(len(self.board)):
-         #   if self.board[i][k] == "Q":
+         #   if self.board[i][k] == "Q": ## didn't account for diags
          #       return False
         #    k = k - 1
         return True
